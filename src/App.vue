@@ -1,47 +1,45 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+
+import type { TodoItem } from '@/types/Todo';
+
+const todos: TodoItem[] = [
+    {
+        id: 1,
+        value: 'Сделать вывод списка задач',
+        checked: true,
+    },
+    {
+        id: 2,
+        value: 'Добавление задачи',
+        checked: false,
+    },
+    {
+        id: 3,
+        value: 'Удаление задачи',
+        checked: false,
+    }
+]
+
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+        <h1>Список задач</h1>
+        <div class="todos" v-for="todo in todos">
+            <div>{{ todo.value }}</div>
+            <div>{{ todo.checked }}</div>
+        </div>
     </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
+.wrapper {
+    width: 300px;
 }
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
+.todos {
     display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+    justify-content: space-between;
+    gap: 30px;
+    margin: 10px;
 }
 </style>
