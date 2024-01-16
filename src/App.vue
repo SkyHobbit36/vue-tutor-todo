@@ -1,10 +1,12 @@
 <script setup lang="ts">
 
-import type { TodoItem } from '@/types/Todo';
+import type { Todo } from '@/types/Todo';
 import { ref } from 'vue';
 import type { Ref } from 'vue';
+import TodoItem from '@/components/TodoItem.vue';
 
-const todos: Ref<TodoItem[]> = ref([
+
+const todos: Ref<Todo[]> = ref([
     {
         id: 1,
         value: 'Сделать вывод списка задач',
@@ -35,7 +37,16 @@ const addTodo = () => {
 }
 
 const removeTodo = (id: number) => {
+    console.log(id)
     todos.value = todos.value.filter(t => t.id !== id);
+}
+
+const onChecked = (id: number) => {
+    todos.value.forEach(t => {
+        if (t.id === id) {
+            t.checked = !t.checked;
+        }
+    })
 }
 
 </script>
@@ -48,11 +59,12 @@ const removeTodo = (id: number) => {
         </form>
 
         <h3>Список задач</h3>
-        <div class="todos" v-for="todo in todos">
-            <input type="checkbox" v-model="todo.checked">
-            <div class="todo-text">{{ todo.value }}</div>
-            <button class="del-btn" @click="removeTodo(todo.id)">X</button>
-        </div>
+        <TodoItem
+            v-for="todo in todos"
+            :todo="todo"
+            @onChecked="onChecked"
+            @removeTodo="removeTodo"
+        />
     </div>
 </template>
 
@@ -63,27 +75,7 @@ const removeTodo = (id: number) => {
 .add-todo {
     width: 100%;
 }
-.todos {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 30px;
-    margin: 10px;
-}
-input[type=checkbox] {
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-}
-.todo-text {
-    width: 350px;
-}
-.del-btn {
-    width: 20px;
-    height: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-}
+
+
+
 </style>
