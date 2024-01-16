@@ -1,4 +1,4 @@
-export type TodoItem = {
+export interface TodoItem {
     id: number;
     value: string;
     checked: boolean;
