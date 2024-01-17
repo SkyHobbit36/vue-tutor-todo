@@ -61,6 +61,7 @@ const onChecked = (id: number) => {
         <h3>Список задач</h3>
         <TodoItem
             v-for="todo in todos"
+            :key="todo.id"
             :todo="todo"
             @onChecked="onChecked"
             @removeTodo="removeTodo"
