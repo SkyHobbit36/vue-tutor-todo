@@ -1,16 +1,14 @@
 <script setup lang="ts">
 import type { Todo } from '@/types/Todo';
 
-const props = defineProps<{
-    todo: Todo,
-}>();
-const { id, checked, value } = props.todo;
+const { id, value } = defineProps<Todo>();
+const checked = defineModel('checked');
 
 </script>
 
 <template>
     <div class="todo-item">
-        <input type="checkbox" :checked="checked" @change="$emit('onChecked', id)">
+        <input type="checkbox" v-model="checked">
         <div class="todo-text">{{ value }}</div>
         <button class="del-btn" @click="$emit('removeTodo', id)">X</button>
     </div>

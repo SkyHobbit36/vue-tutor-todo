@@ -37,16 +37,7 @@ const addTodo = () => {
 }
 
 const removeTodo = (id: number) => {
-    console.log(id)
     todos.value = todos.value.filter(t => t.id !== id);
-}
-
-const onChecked = (id: number) => {
-    todos.value.forEach(t => {
-        if (t.id === id) {
-            t.checked = !t.checked;
-        }
-    })
 }
 
 </script>
@@ -54,16 +45,18 @@ const onChecked = (id: number) => {
 <template>
     <div class="wrapper">
         <h3>Добавить задачу</h3>
-        <form @submit.prevent="addTodo">
-            <input class="add-todo" type="text" v-model="newTodo">
+        <form @submit.prevent="addTodo" class="add-todo">
+            <input type="text" v-model="newTodo">
+            <button>Добавить</button>
         </form>
 
         <h3>Список задач</h3>
         <TodoItem
             v-for="todo in todos"
             :key="todo.id"
-            :todo="todo"
-            @onChecked="onChecked"
+            :id="todo.id"
+            :value="todo.value"
+            v-model:checked="todo.checked"
             @removeTodo="removeTodo"
         />
     </div>
@@ -73,10 +66,11 @@ const onChecked = (id: number) => {
 .wrapper {
     width: 400px;
 }
+
 .add-todo {
+    display: flex;
+}
+.add-todo input{
     width: 100%;
 }
-
-
-
 </style>
