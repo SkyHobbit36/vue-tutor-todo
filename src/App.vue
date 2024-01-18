@@ -1,10 +1,9 @@
 <script setup lang="ts">
-
 import type { Todo } from '@/types/Todo';
 import { ref } from 'vue';
 import type { Ref } from 'vue';
 import TodoItem from '@/components/TodoItem.vue';
-
+import AddTodo from '@/components/AddTodo.vue';
 
 const todos: Ref<Todo[]> = ref([
     {
@@ -24,31 +23,19 @@ const todos: Ref<Todo[]> = ref([
     }
 ]);
 
-const newTodo = ref('');
-
-const addTodo = () => {
-    todos.value.push({
-        id: todos.value[todos.value.length - 1].id + 1,
-        value: newTodo.value,
-        checked: false,
-    });
-
-    newTodo.value = '';
-}
+const addNewTodo = (newTodo: Todo) => {
+    todos.value.push(newTodo);
+};
 
 const removeTodo = (id: number) => {
     todos.value = todos.value.filter(t => t.id !== id);
-}
-
+};
 </script>
 
 <template>
     <div class="wrapper">
         <h3>Добавить задачу</h3>
-        <form @submit.prevent="addTodo" class="add-todo">
-            <input type="text" v-model="newTodo">
-            <button>Добавить</button>
-        </form>
+        <AddTodo @on-submit="addNewTodo"/>
 
         <h3>Список задач</h3>
         <TodoItem
@@ -65,12 +52,5 @@ const removeTodo = (id: number) => {
 <style scoped>
 .wrapper {
     width: 400px;
-}
-
-.add-todo {
-    display: flex;
-}
-.add-todo input{
-    width: 100%;
 }
 </style>

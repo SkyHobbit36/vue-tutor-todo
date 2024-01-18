@@ -3,7 +3,6 @@ import type { Todo } from '@/types/Todo';
 
 const { id, value } = defineProps<Todo>();
 const checked = defineModel('checked');
-
 </script>
 
 <template>
