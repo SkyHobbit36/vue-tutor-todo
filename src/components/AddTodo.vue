@@ -5,6 +5,7 @@ const emit = defineEmits(['on-submit']);
 
 const newTodo = ref('');
 const addTodo = () => {
+    if (!newTodo.value) return;
     const newTodoModel = {
         id: Date.now(),
         value: newTodo.value,
