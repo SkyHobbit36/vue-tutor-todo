@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import Button from '@/UI/Button.vue';
 
 const emit = defineEmits(['on-submit']);
 
@@ -21,7 +22,7 @@ const addTodo = () => {
 <template>
     <form @submit.prevent="addTodo" class="add-todo">
         <input type="text" v-model="newTodo">
-        <button>Добавить</button>
+        <Button>Добавить</Button>
     </form>
 </template>
 

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Todo } from '@/types/Todo';
+import Button from '@/UI/Button.vue';
 
 const { id, value } = defineProps<Todo>();
 const checked = defineModel('checked');
@@ -9,7 +10,7 @@ const checked = defineModel('checked');
     <div class="todo-item">
         <input type="checkbox" v-model="checked">
         <div class="todo-text">{{ value }}</div>
-        <button class="del-btn" @click="$emit('removeTodo', id)">X</button>
+        <Button class="del-btn" @click="$emit('removeTodo', id)">X</Button>
     </div>
 </template>
 
@@ -34,8 +35,9 @@ const checked = defineModel('checked');
     cursor: pointer;
 }
 input[type=checkbox] {
-    width: 20px;
-    height: 20px;
+    width: 40px;
+    height: 40px;
     cursor: pointer;
+    accent-color: darkslategray;
 }
 </style>

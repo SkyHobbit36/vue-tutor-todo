@@ -4,6 +4,7 @@ import { computed, ref } from 'vue';
 import type { Ref } from 'vue';
 import TodoItem from '@/components/TodoItem.vue';
 import AddTodo from '@/components/AddTodo.vue';
+import Button from '@/UI/Button.vue';
 
 const todos: Ref<Todo[]> = ref([
     {
@@ -55,9 +56,9 @@ const removeTodo = (id: number) => {
         <AddTodo @on-submit="addNewTodo"/>
 
         <h3>Список задач</h3>
-        <button class="show-completed-btn"
+        <Button class="show-completed-btn"
             @click="showCompleted = !showCompleted"
-        >{{ showCompleted ? 'Скрыть завешенные' : 'Показать все'}}</button>
+        >{{ showCompleted ? 'Скрыть завешенные' : 'Показать все'}}</Button>
         <TodoItem
             v-for="todo in filteredTodos"
             :key="todo.id"
@@ -76,8 +77,5 @@ const removeTodo = (id: number) => {
 }
 .show-completed-btn {
     width: 200px;
-    margin: 10px;
-    padding: 10px;
-    cursor: pointer;
 }
 </style>
