@@ -2,14 +2,14 @@
 import type { Todo } from '@/types/Todo';
 import Button from '@/UI/Button.vue';
 
-const { id, value } = defineProps<Todo>();
-const checked = defineModel('checked');
+const { id, todo } = defineProps<Todo>();
+const completed = defineModel('completed');
 </script>
 
 <template>
     <div class="todo-item">
-        <input type="checkbox" v-model="checked">
-        <div class="todo-text">{{ value }}</div>
+        <input type="checkbox" v-model="completed">
+        <div class="todo-text">{{ todo }}</div>
         <Button class="del-btn" @click="$emit('removeTodo', id)">X</Button>
     </div>
 </template>

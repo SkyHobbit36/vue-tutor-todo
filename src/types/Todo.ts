@@ -1,5 +1,13 @@
 export interface Todo {
     id: number;
-    value: string;
-    checked: boolean;
+    todo: string;
+    completed: boolean;
+    userId?: number;
+}
+
+export interface TodosResponse {
+    todos: Todo[];
+    total: number;
+    skip: number;
+    limit: number;
 }

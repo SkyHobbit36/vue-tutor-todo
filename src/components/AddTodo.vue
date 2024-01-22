@@ -1,16 +1,17 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import Button from '@/UI/Button.vue';
+import type { Todo } from '@/types/Todo';
 
 const emit = defineEmits(['on-submit']);
 
 const newTodo = ref('');
 const addTodo = () => {
     if (!newTodo.value) return;
-    const newTodoModel = {
+    const newTodoModel: Todo = {
         id: Date.now(),
-        value: newTodo.value,
-        checked: false,
+        todo: newTodo.value,
+        completed: false,
     };
 
     emit('on-submit', newTodoModel);

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { Todo } from '@/types/Todo';
-import { computed, ref } from 'vue';
+import type { Todo, TodosResponse } from '@/types/Todo';
+import { computed, ref, watch } from 'vue';
 import type { Ref } from 'vue';
 import TodoItem from '@/components/TodoItem.vue';
 import AddTodo from '@/components/AddTodo.vue';
@@ -9,38 +9,38 @@ import Button from '@/UI/Button.vue';
 const todos: Ref<Todo[]> = ref([
     {
         id: 1,
-        value: 'Сделать вывод списка задач',
-        checked: true,
+        todo: 'Сделать вывод списка задач',
+        completed: true,
     },
     {
         id: 2,
-        value: 'Добавление задачи',
-        checked: true,
+        todo: 'Добавление задачи',
+        completed: true,
     },
     {
         id: 3,
-        value: 'Удаление задачи',
-        checked: true,
+        todo: 'Удаление задачи',
+        completed: true,
     },
     {
         id: 4,
-        value: 'Добавление через модалку',
-        checked: false,
+        todo: 'Добавление через модалку',
+        completed: false,
     },
     {
         id: 5,
-        value: 'загрузка списка с jsonplaceholder',
-        checked: false,
+        todo: 'загрузка списка с jsonplaceholder',
+        completed: false,
     },
     {
         id: 6,
-        value: 'Пагинация, роутинг',
-        checked: false,
+        todo: 'Пагинация, роутинг',
+        completed: false,
     }
 ]);
 
 const showCompleted: Ref<boolean> = ref(true);
-const filteredTodos = computed(() => showCompleted.value ? todos.value : todos.value.filter(t => !t.checked));
+const filteredTodos = computed(() => showCompleted.value ? todos.value : todos.value.filter(t => !t.completed));
 
 const addNewTodo = (newTodo: Todo) => {
     todos.value.push(newTodo);
@@ -48,6 +48,15 @@ const addNewTodo = (newTodo: Todo) => {
 const removeTodo = (id: number) => {
     todos.value = todos.value.filter(t => t.id !== id);
 };
+
+const skip: Ref<number> = ref(-10);
+watch(skip, () => {
+    fetch('https://dummyjson.com/todos?limit=10&skip=' + skip.value)
+        .then(res => res.json())
+        .then((data: TodosResponse) => {
+            todos.value = data.todos;
+        });
+})
 </script>
 
 <template>
@@ -63,11 +72,12 @@ const removeTodo = (id: number) => {
             v-for="todo in filteredTodos"
             :key="todo.id"
             :id="todo.id"
-            :value="todo.value"
-            v-model:checked="todo.checked"
+            :todo="todo.todo"
+            v-model:completed="todo.completed"
             @removeTodo="removeTodo"
         />
 
+        <Button @click="skip += 10">Загрузить еще</Button>
     </div>
 </template>
 
