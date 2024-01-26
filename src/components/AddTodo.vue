@@ -30,8 +30,10 @@ const addTodo = () => {
 <style scoped>
 .add-todo {
     display: flex;
+    gap: 10px;
 }
 .add-todo input{
     width: 100%;
+    border-radius: 10px;
 }
 </style>
