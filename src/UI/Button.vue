@@ -6,9 +6,9 @@ const theme = inject<Theme>('theme');
 </script>
 
 <template>
-    <button :class="[theme + '-button', 'button']">
+    <v-btn :class="[theme + '-button', 'button']">
         <slot></slot>
-    </button>
+    </v-btn>
 </template>
 
 <style scoped>
@@ -23,7 +23,6 @@ const theme = inject<Theme>('theme');
 .light-button {
     color: white;
     background-color: darkslategray;
-    border: 1px solid darkslategray;
 }
 .light-button:hover {
     background-color: #4f7979;
@@ -31,7 +30,6 @@ const theme = inject<Theme>('theme');
 .dark-button {
     color: darkslategray;
     background-color: white;
-    border: 1px solid white;
 }
 .dark-button:hover {
     background-color: #e5e5e5;
