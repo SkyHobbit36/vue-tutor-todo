@@ -23,7 +23,7 @@ const addTodo = () => {
 <template>
     <form @submit.prevent="addTodo" class="add-todo">
         <input type="text" v-model="newTodo">
-        <Button>Добавить</Button>
+        <Button type="submit">Добавить</Button>
     </form>
 </template>
 
