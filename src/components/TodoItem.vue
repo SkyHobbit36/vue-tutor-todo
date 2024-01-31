@@ -1,20 +1,32 @@
 <script setup lang="ts">
 import type { Todo } from '@/types/Todo';
 import Button from '@/UI/Button.vue';
-import { inject } from 'vue';
+import { inject, ref } from 'vue';
 import { Theme } from '@/types/Theme.enum';
 
 const theme = inject<Theme>('theme');
 const { id, todo } = defineProps<Todo>();
 const completed = defineModel('completed');
+const emit = defineEmits(['removeTodo']);
+const deleted = ref(true);
+
+const handleDelete = () => {
+    deleted.value =!deleted.value;
+    //
+}
+const removeTodo = () => {
+    emit('removeTodo', id);
+}
 </script>
 
 <template>
-    <div class="todo-item">
-        <input type="checkbox" :class="[theme, 'checkbox']" v-model="completed">
-        <div class="todo-text">{{ todo }}</div>
-        <Button class="del-btn" @click="$emit('removeTodo', id)">X</Button>
-    </div>
+    <transition @leave="removeTodo">
+        <div v-if="deleted" class="todo-item">
+            <input type="checkbox" :class="[theme, 'checkbox']" v-model="completed">
+            <div class="todo-text">{{ todo }}</div>
+            <Button class="del-btn" @click="handleDelete">X</Button>
+        </div>
+    </transition>
 </template>
 
 <style scoped>
@@ -23,7 +35,7 @@ const completed = defineModel('completed');
     justify-content: space-between;
     align-items: center;
     gap: 30px;
-    margin: 10px;
+    padding: 10px;
 }
 
 .todo-text {
@@ -47,5 +59,18 @@ const completed = defineModel('completed');
 }
 .light {
     accent-color: darkslategray;
+}
+
+.v-leave-from {
+    height: 50px;
+}
+.v-leave-to {
+    opacity: 0;
+    transform: translateX(-500px);
+    height: 0px;
+    padding: 0px;
+}
+.v-leave-active {
+    transition: all 0.3s ease;
 }
 </style>
