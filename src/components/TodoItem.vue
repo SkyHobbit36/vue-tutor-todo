@@ -7,24 +7,16 @@ import { Theme } from '@/types/Theme.enum';
 const theme = inject<Theme>('theme');
 const { id, todo } = defineProps<Todo>();
 const completed = defineModel('completed');
-const emit = defineEmits(['removeTodo']);
 const deleted = ref(true);
 
-const handleDelete = () => {
-    deleted.value =!deleted.value;
-    //
-}
-const removeTodo = () => {
-    emit('removeTodo', id);
-}
 </script>
 
 <template>
-    <transition @leave="removeTodo">
+    <transition @leave="$emit('removeTodo', id)">
         <div v-if="deleted" class="todo-item">
             <input type="checkbox" :class="[theme, 'checkbox']" v-model="completed">
             <div class="todo-text">{{ todo }}</div>
-            <Button class="del-btn" @click="handleDelete">X</Button>
+            <Button class="del-btn" @click="deleted =!deleted">X</Button>
         </div>
     </transition>
 </template>
